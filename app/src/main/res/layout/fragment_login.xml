@@ -54,6 +54,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
+                android:inputType="textPassword"
                 android:afterTextChanged="@{data.onPasswordTextChanged}"
                 android:layout_height="wrap_content" />
 

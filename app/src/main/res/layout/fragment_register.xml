@@ -12,6 +12,10 @@
             type="com.example.mosis_projekat.loginRegistration.models.LoginRegistrationViewModel" />
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -80,7 +84,8 @@
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
                 android:padding="2dp"
-                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_broken_image" />
 
             <Button
@@ -148,6 +153,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
+                android:inputType="textPassword"
                 android:afterTextChanged="@{data.onPasswordTextChanged}"
                 android:layout_height="wrap_content" />
 
@@ -177,6 +183,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    </ScrollView>
 
 </layout>

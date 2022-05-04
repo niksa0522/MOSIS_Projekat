@@ -1,10 +1,12 @@
 package com.example.mosis_projekat.loginRegistration
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.mosis_projekat.Main.MainActivity
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -42,8 +44,10 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         super.onStart()
         val currentUser = auth.currentUser
         if(currentUser != null){
-            //val i: Intent = Intent(this,MainClass::class.java)
-            //startActivity(i)
+            val i: Intent = Intent(this, MainActivity::class.java)
+            i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(i)
+            finish()
         }
     }
 
