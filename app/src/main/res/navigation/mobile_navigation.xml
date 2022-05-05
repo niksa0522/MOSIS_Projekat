@@ -12,14 +12,23 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.mosis_projekat.Main.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_friends"
+        android:name="com.example.mosis_projekat.Main.ui.friends.FriendsFragment"
+        android:label="@string/menu_friends"
+        tools:layout="@layout/fragment_friends" >
+        <action
+            android:id="@+id/action_nav_friends_to_bluetoothUsersFragment"
+            app:destination="@id/bluetoothUsersFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.mosis_projekat.Main.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/bluetoothUsersFragment"
+        android:name="com.example.mosis_projekat.Main.ui.friends.BluetoothUsersFragment"
+        android:label="fragment_bluetooth_users_list"
+        tools:layout="@layout/fragment_bluetooth_users_list" />
 </navigation>

@@ -31,16 +31,18 @@
     <string name="btnAddPicture">Dodaj Sliku</string>
     <string name="btnLogin">Prijavi se</string>
     <string name="tVReg">Registruj se</string>
+    <string name="tVSignOut">Odjavi se</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">MOSIS Projekat</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="action_add_friend_server">Dodaj Prijatelja (Server)</string>
+    <string name="action_add_friend_client">Dodaj Prijatelja (Client)</string>
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_friends">Prijatelji</string>
     <string name="menu_slideshow">Slideshow</string>
 
 

@@ -1,10 +1,10 @@
-package com.example.mosis_projekat.Main.ui.gallery
+package com.example.mosis_projekat.Main.ui.friends
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class FriendsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"

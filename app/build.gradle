@@ -51,6 +51,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
 
 
+
+    implementation("androidx.activity:activity-ktx:1.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    // Testing Fragments in Isolation
+    debugImplementation("androidx.fragment:fragment-testing:1.4.1")
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -62,6 +69,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
