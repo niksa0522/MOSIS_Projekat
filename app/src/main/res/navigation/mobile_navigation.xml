@@ -31,4 +31,9 @@
         android:name="com.example.mosis_projekat.Main.ui.friends.BluetoothUsersFragment"
         android:label="fragment_bluetooth_users_list"
         tools:layout="@layout/fragment_bluetooth_users_list" />
+    <fragment
+        android:id="@+id/nav_maps"
+        android:name="com.example.mosis_projekat.Main.ui.maps.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
