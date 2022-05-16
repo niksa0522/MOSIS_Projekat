@@ -52,8 +52,9 @@ class RegisterFragment : Fragment() {
         val passwordET = binding.etPassword
         val fName = binding.etFName
         val lName = binding.etLName
+        val phoneNum = binding.etphoneNum
 
-        InitData(usernameET,passwordET,fName,lName)
+        InitData(usernameET,passwordET,fName,lName,phoneNum)
 
         binding.btnReg.setOnClickListener{ViewModel.createAccount(requireActivity())}
         binding.tvLogin.setOnClickListener{findNavController().navigate(R.id.action_registerFragment_to_loginFragment)}
@@ -62,13 +63,15 @@ class RegisterFragment : Fragment() {
             binding.profilePic.setImageBitmap(newPicture)
         }
 
+
     }
 
-    fun InitData(usernameET:EditText,passwordET:EditText,FName:EditText,LName:EditText){
+    fun InitData(usernameET:EditText,passwordET:EditText,FName:EditText,LName:EditText, phoneNum:EditText){
         usernameET.setText(ViewModel.username.value ?: "")
         passwordET.setText(ViewModel.password.value ?: "")
         FName.setText(ViewModel.fName.value ?: "")
         LName.setText(ViewModel.lName.value ?: "")
+        phoneNum.setText(ViewModel.phoneNum.value ?: "")
         if(ViewModel.picture.value!=null)
             binding.profilePic.setImageBitmap(ViewModel.picture.value)
     }

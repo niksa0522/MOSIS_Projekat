@@ -44,6 +44,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_friends">Prijatelji</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="hint_PhoneNum">Broj Telefona</string>
 
 
 </resources>

@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.mosis_projekat.Main.MainActivity
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.databaseModels.DatabaseLocation
@@ -59,7 +60,8 @@ class MapsFragment : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
         map = googleMap
-        val home:LatLng = LatLng(43.3147738,21.898629)
+        MapsViewModel.setMap(map,requireContext(),findNavController())
+        //val home:LatLng = LatLng(43.3147738,21.898629)
 
 
 
@@ -78,12 +80,7 @@ class MapsFragment : Fragment() {
         }
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoomLevel))
         //map.addMarker(MarkerOptions().position(home))
-
-        MapsViewModel.setMapStyle(map,requireContext())
-
         enableMyLocation()
-        map.setMaxZoomPreference(18f)
-        map.setMinZoomPreference(14f)
         trackLocation()
 
     }
@@ -204,8 +201,9 @@ class MapsFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
 
 
+
         //observer se ne pali na mapu, moras da sredis to, pogledaj kako sledeceg puta
-        MapsViewModel.users.observe(viewLifecycleOwner) {
+        /*MapsViewModel.users.observe(viewLifecycleOwner) {
             if (this::map.isInitialized) {
                 map.clear()
                 for (i in it) {
@@ -218,7 +216,7 @@ class MapsFragment : Fragment() {
                     )
                 }
             }
-        }
+        }*/
 
 
     }

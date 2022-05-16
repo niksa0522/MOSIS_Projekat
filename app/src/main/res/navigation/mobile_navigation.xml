@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_friends_to_bluetoothUsersFragment"
             app:destination="@id/bluetoothUsersFragment" />
+        <action
+            android:id="@+id/action_nav_friends_to_viewFriendFragment"
+            app:destination="@id/viewFriendFragment" />
     </fragment>
 
     <fragment
@@ -35,5 +38,19 @@
         android:id="@+id/nav_maps"
         android:name="com.example.mosis_projekat.Main.ui.maps.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_nav_maps_to_viewFriendFragment"
+            app:destination="@id/viewFriendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewFriendFragment"
+        android:name="com.example.mosis_projekat.Main.ui.friends.ViewFriendFragment"
+        android:label="fragment_view_friend"
+        tools:layout="@layout/fragment_view_friend" >
+        <argument
+            android:name="uid"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
 </navigation>

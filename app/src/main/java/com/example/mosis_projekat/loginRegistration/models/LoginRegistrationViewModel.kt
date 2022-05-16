@@ -47,6 +47,10 @@ class LoginRegistrationViewModel : ViewModel() {
 
     val username: LiveData<String> = _username
 
+    private val _phoneNum = MutableLiveData<String>()
+
+    val phoneNum: LiveData<String> = _phoneNum
+
     init {
         auth = Firebase.auth
     }
@@ -65,6 +69,9 @@ class LoginRegistrationViewModel : ViewModel() {
     }
     fun onPasswordTextChanged(p0: Editable?){
         _password.value = p0.toString()
+    }
+    fun onPhoneNumTextChanged(p0: Editable?){
+        _phoneNum.value = p0.toString()
     }
 
 
@@ -124,7 +131,7 @@ class LoginRegistrationViewModel : ViewModel() {
             if(task.isSuccessful){
                 //kada je slika uploadovana uzima se njen url i uploaduje se user
                 val imageUrl = task.result.toString()
-                val user = User(fName.value,lName.value,imageUrl)
+                val user = User(fName.value,lName.value,imageUrl,_phoneNum.value)
                 val database = Firebase.database("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
                 val userRef = database.reference.child("users").child(userID).setValue(user)
                 val profileUpdate = userProfileChangeRequest {
@@ -162,6 +169,11 @@ class LoginRegistrationViewModel : ViewModel() {
             if(lName.value == null || lName.value == "")
             {
                 Toast.makeText(activity, "Unesi Prezime!", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            if(phoneNum.value == null || phoneNum.value == "")
+            {
+                Toast.makeText(activity, "Unesi Telefon!", Toast.LENGTH_SHORT).show()
                 return false
             }
             if(picture.value == null){
