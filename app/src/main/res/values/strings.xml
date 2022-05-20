@@ -45,6 +45,22 @@
     <string name="menu_friends">Prijatelji</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="hint_PhoneNum">Broj Telefona</string>
+    <string name="hint_WorkShopName">Ime Radionice</string>
+    <string name="tip_radionice">Tip Radionice:</string>
+    <string name="cena_rada">Cena Rada:</string>
+    <string name="iskoristi_kameru">Koristi Kameru</string>
+    <string name="hint_Opis">Opis</string>
+    <string name="dodaj_radionicu">Dodaj Radionicu</string>
+
+
+    <string-array name="workshops_array">
+        <item>Mehanicar</item>
+        <item>Farbar</item>
+        <item>Limar</item>
+        <item>Vulkanizer</item>
+        <item>Pranje i Ciscenje</item>
+        <item>Drugo</item>
+    </string-array>
 
 
 </resources>

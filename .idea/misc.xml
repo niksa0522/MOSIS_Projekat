@@ -18,6 +18,17 @@
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/menu/friends_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/menu/main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.1" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/ic_baseline_attach_money_24_green.xml" value="0.1" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.1" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/money_bar.xml" value="0.1" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/money_ratingbar_full_empty.xml" value="0.1" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/money_ratingbar_full_filled.xml" value="0.1" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/fragment_add_workshop.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/fragment_bluetooth_users.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/fragment_bluetooth_users_list.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/fragment_friends.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/fragment_maps.xml" value="0.358695652173913" />
         <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/fragment_register.xml" value="0.358695652173913" />
         <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/layout/fragment_view_friend.xml" value="0.358695652173913" />

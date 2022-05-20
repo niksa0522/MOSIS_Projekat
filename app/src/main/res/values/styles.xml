@@ -9,5 +9,11 @@
         <item name="helperTextTextAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
     </style>
 
+        <style name="moneyRatingBar" parent="@android:style/Widget.RatingBar">
+            <item name="android:progressDrawable">@drawable/money_bar</item>
+            <item name="android:minHeight">23dip</item>
+            <item name="android:maxHeight">25dip</item>
+        </style>
+
 
 </resources>
