@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_nav_maps_to_viewFriendFragment"
             app:destination="@id/viewFriendFragment" />
+        <action
+            android:id="@+id/action_nav_maps_to_addWorkshopFragment"
+            app:destination="@id/addWorkshopFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewFriendFragment"
@@ -52,5 +55,16 @@
             android:name="uid"
             app:argType="string"
             android:defaultValue='""' />
+    </fragment>
+    <fragment
+        android:id="@+id/addWorkshopFragment"
+        android:name="com.example.mosis_projekat.Main.ui.maps.workshops.AddWorkshopFragment"
+        android:label="AddWorkshopFragment" >
+        <argument
+            android:name="lat"
+            app:argType="java.lang.Double" />
+        <argument
+            android:name="long"
+            app:argType="java.lang.Double" />
     </fragment>
 </navigation>

@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -44,7 +46,7 @@ class MapsFragment : Fragment() {
     private lateinit var locationCallback: LocationCallback
     private var lastLocation: Location? = null
     private val MapsViewModel: MapsViewModel by viewModels()
-    private var markers:MutableList<Marker> = mutableListOf()
+    //private var markers:MutableList<Marker> = mutableListOf()
 
     private lateinit var map:GoogleMap
 
@@ -69,14 +71,17 @@ class MapsFragment : Fragment() {
         //kao i slanje te lokacije na firebase
         val zoomLevel = 17f
         fusedLocationClient?.lastLocation?.addOnCompleteListener {
-            map.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(
-                        it.result.latitude,
-                        it.result.longitude
-                    ), zoomLevel
+            if(it.result.latitude!=null && it.result.longitude!=null) {
+                map.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            it.result.latitude,
+                            it.result.longitude
+                        ), zoomLevel
+                    )
                 )
-            )
+                lastLocation=it.result
+            }
         }
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoomLevel))
         //map.addMarker(MarkerOptions().position(home))
@@ -88,8 +93,8 @@ class MapsFragment : Fragment() {
     @SuppressLint("MissingPermission")
     private fun trackLocation(){
         val locationRequest = LocationRequest.create().apply {
-            interval = 10000
-            fastestInterval = 5000
+            interval = 1000
+            fastestInterval = 500
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
@@ -200,6 +205,14 @@ class MapsFragment : Fragment() {
         setupLocationTracking()
         mapFragment?.getMapAsync(callback)
 
+        val btn: FloatingActionButton = view.findViewById(R.id.fab_add)
+        btn.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putDouble("lat",lastLocation!!.latitude)
+            bundle.putDouble("long",lastLocation!!.longitude)
+            findNavController().navigate(R.id.action_nav_maps_to_addWorkshopFragment,bundle)
+        }
+
 
 
         //observer se ne pali na mapu, moras da sredis to, pogledaj kako sledeceg puta
@@ -227,6 +240,7 @@ class MapsFragment : Fragment() {
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
                 enableMyLocation()
+                trackLocation()
             }
         }
     }

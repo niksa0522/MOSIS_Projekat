@@ -65,6 +65,7 @@ class RegisterFragment : Fragment() {
 
 
     }
+    //TODO dodaj permision pitanje
 
     fun InitData(usernameET:EditText,passwordET:EditText,FName:EditText,LName:EditText, phoneNum:EditText){
         usernameET.setText(ViewModel.username.value ?: "")

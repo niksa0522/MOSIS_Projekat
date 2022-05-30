@@ -51,6 +51,7 @@
     <string name="iskoristi_kameru">Koristi Kameru</string>
     <string name="hint_Opis">Opis</string>
     <string name="dodaj_radionicu">Dodaj Radionicu</string>
+    <string name="hint_WorkShopType">Tip Radionice</string>
 
 
     <string-array name="workshops_array">

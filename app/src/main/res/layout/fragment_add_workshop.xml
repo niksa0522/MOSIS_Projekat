@@ -12,6 +12,19 @@
         android:layout_height="wrap_content"
         tools:context=".Main.ui.maps.workshops.AddWorkshopFragment">
 
+        <ImageView
+            android:id="@+id/profilePic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_broken_image"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WorkshopPhoneNum"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -23,7 +36,8 @@
             app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/WorkshopName">
+            app:layout_constraintTop_toBottomOf="@id/WorkshopType"
+            tools:layout_editor_absoluteY="357dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etWorkshopPhoneNum"
@@ -45,7 +59,7 @@
             app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llPicture">
+            app:layout_constraintTop_toBottomOf="@+id/profilePic">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etWorkshopName"
@@ -54,6 +68,28 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/WorkshopType"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="32dp"
+            android:hint="@string/hint_WorkShopType"
+            app:errorIconDrawable="@drawable/ic_error"
+            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/WorkshopName">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteWorkshopType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/WorkshopOpis"
@@ -65,8 +101,8 @@
             app:errorIconDrawable="@drawable/ic_error"
             app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/WorkshopPhoneNum"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/WorkshopPhoneNum"
             tools:layout_editor_absoluteY="499dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -79,39 +115,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-            android:id="@+id/LLType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/WorkshopOpis">
-
-            <TextView
-                android:id="@+id/TipRadionice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tip_radionice"
-                android:textSize="20sp" />
-
-            <Spinner
-                android:id="@+id/workshopTypeSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toEndOf="@+id/TipRadionice"
-                app:layout_constraintTop_toBottomOf="@+id/WorkshopName" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/LLType">
+            app:layout_constraintTop_toBottomOf="@+id/WorkshopOpis">
 
             <TextView
                 android:id="@+id/CenaRada"
@@ -126,56 +136,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:rating="2"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:numStars="3"
                 android:stepSize="1.0" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/llPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/profilePic"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_broken_image" />
-
-            <Button
-                android:id="@+id/btnSelectPicture"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0"
-                android:text="@string/btnAddPicture"
-                app:layout_constraintTop_toBottomOf="@+id/LName" />
-
-            <Button
-                android:id="@+id/btnAddPicture"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0"
-                android:text="@string/iskoristi_kameru"
-                app:layout_constraintTop_toBottomOf="@+id/LName" />
-
-
         </LinearLayout>
 
 
@@ -185,11 +150,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/dodaj_radionicu"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="742dp" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <ImageView
+            android:id="@+id/image_take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/profilePic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_photo_camera_32"
+            tools:layout_editor_absoluteX="46dp"
+            tools:layout_editor_absoluteY="77dp" />
+
+        <ImageView
+            android:id="@+id/image_add_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/profilePic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_baseline_photo_library_32" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
