@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.mosis_projekat.loginRegistration.LoginFragment"
+        android:name="com.example.mosis_projekat.screens.login.LoginFragment"
         android:label="@string/btnLogin"
         tools:layout="@layout/fragment_login">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.mosis_projekat.loginRegistration.RegisterFragment"
+        android:name="com.example.mosis_projekat.screens.registration.RegisterFragment"
         android:label="@string/btnReg"
         tools:layout="@layout/fragment_register" >
         <action

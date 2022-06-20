@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".Main.ui.maps.workshops.AddWorkshopFragment">
+        tools:context=".screens.addWorkshop.AddWorkshopFragment">
 
         <ImageView
             android:id="@+id/profilePic"
@@ -127,6 +127,7 @@
                 android:id="@+id/CenaRada"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:text="@string/cena_rada"
                 android:textSize="20sp" />
 

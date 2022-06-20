@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.mosis_projekat.Main.ui.home.HomeFragment"
+        android:name="com.example.mosis_projekat.screens.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_friends"
-        android:name="com.example.mosis_projekat.Main.ui.friends.FriendsFragment"
+        android:name="com.example.mosis_projekat.screens.friends.FriendsFragment"
         android:label="@string/menu_friends"
         tools:layout="@layout/fragment_friends" >
         <action
@@ -26,17 +26,17 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.mosis_projekat.Main.ui.slideshow.SlideshowFragment"
+        android:name="com.example.mosis_projekat.screens.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/bluetoothUsersFragment"
-        android:name="com.example.mosis_projekat.Main.ui.friends.BluetoothUsersFragment"
+        android:name="com.example.mosis_projekat.screens.friends.BluetoothUsersFragment"
         android:label="fragment_bluetooth_users_list"
         tools:layout="@layout/fragment_bluetooth_users_list" />
     <fragment
         android:id="@+id/nav_maps"
-        android:name="com.example.mosis_projekat.Main.ui.maps.MapsFragment"
+        android:name="com.example.mosis_projekat.screens.maps.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewFriendFragment"
-        android:name="com.example.mosis_projekat.Main.ui.friends.ViewFriendFragment"
+        android:name="com.example.mosis_projekat.screens.friends.ViewFriendFragment"
         android:label="fragment_view_friend"
         tools:layout="@layout/fragment_view_friend" >
         <argument
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/addWorkshopFragment"
-        android:name="com.example.mosis_projekat.Main.ui.maps.workshops.AddWorkshopFragment"
+        android:name="com.example.mosis_projekat.screens.addWorkshop.AddWorkshopFragment"
         android:label="AddWorkshopFragment" >
         <argument
             android:name="lat"
@@ -67,4 +67,25 @@
             android:name="long"
             app:argType="java.lang.Double" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.example.mosis_projekat.screens.workshopSearch.SearchWorkshopFragment"
+        android:label="fragment_search_workshop"
+        tools:layout="@layout/fragment_search_workshop" >
+        <action
+            android:id="@+id/action_searchWorkshopFragment_to_workshopTypeDialog"
+            app:destination="@id/workshopTypeDialog" />
+        <action
+            android:id="@+id/action_nav_search_to_workshopListFragment"
+            app:destination="@id/workshopListFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/workshopTypeDialog"
+        android:name="com.example.mosis_projekat.dialogs.workshopTypeDialog"
+        android:label="workshopTypeDialog" />
+    <fragment
+        android:id="@+id/workshopListFragment"
+        android:name="com.example.mosis_projekat.screens.workshopList.WorkshopListFragment"
+        android:label="fragment_workshop_list"
+        tools:layout="@layout/fragment_workshop_list" />
 </navigation>

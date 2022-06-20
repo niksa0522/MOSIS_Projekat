@@ -52,6 +52,13 @@
     <string name="hint_Opis">Opis</string>
     <string name="dodaj_radionicu">Dodaj Radionicu</string>
     <string name="hint_WorkShopType">Tip Radionice</string>
+    <string name="hint_WorkshopDistance">Rastojanje do Radionice (u metrima)</string>
+    <string name="ocena">Ocena:</string>
+    <string name="search">Pretrazi</string>
+    <string name="menu_maps">Mapa</string>
+    <string name="menu_search">Pretraga</string>
+    <string name="confirm">Potvrdi</string>
+    <string name="cancel">Otkazi</string>
 
 
     <string-array name="workshops_array">
@@ -60,7 +67,6 @@
         <item>Limar</item>
         <item>Vulkanizer</item>
         <item>Pranje i Ciscenje</item>
-        <item>Drugo</item>
     </string-array>
 
 

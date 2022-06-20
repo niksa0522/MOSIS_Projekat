@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
-    tools:context=".loginRegistration.LoginFragment">
+    tools:context=".screens.login.LoginFragment">
 
 
     <data>
         <variable
             name="data"
-            type="com.example.mosis_projekat.loginRegistration.models.LoginRegistrationViewModel" />
+            type="com.example.mosis_projekat.shared_view_models.LoginRegistrationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
