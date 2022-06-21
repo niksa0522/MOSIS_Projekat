@@ -87,5 +87,14 @@
         android:id="@+id/workshopListFragment"
         android:name="com.example.mosis_projekat.screens.workshopList.WorkshopListFragment"
         android:label="fragment_workshop_list"
-        tools:layout="@layout/fragment_workshop_list" />
+        tools:layout="@layout/fragment_workshop_list" >
+        <action
+            android:id="@+id/action_workshopListFragment_to_workshopMainFragment"
+            app:destination="@id/workshopMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workshopMainFragment"
+        android:name="com.example.mosis_projekat.screens.workshopMain.WorkshopMainFragment"
+        android:label="fragment_workshop_main"
+        tools:layout="@layout/fragment_workshop_main" />
 </navigation>

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mosis_projekat.firebase.databaseModels.Workshop
 import com.example.mosis_projekat.models.WorkshopWithID
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -26,6 +27,7 @@ class WorkshopSearchListViewModel : ViewModel() {
 
     private var workshopList = mutableListOf<Workshop?>()
     private var workshopIdList = mutableListOf<String?>()
+    private var selectedWorkshop:WorkshopWithID? = null
 
 
     private val _workshopsWithID = MutableLiveData<MutableList<WorkshopWithID>>()
@@ -36,11 +38,13 @@ class WorkshopSearchListViewModel : ViewModel() {
         workshopDistance=wd
         workshopPrice=wp
         workshopRating=wr
-        Log.d("WORKSHOPSTATS",workshopName)
-        Log.d("WORKSHOPSTATS",workshopTypes.toString())
-        Log.d("WORKSHOPSTATS",workshopDistance.toString())
-        Log.d("WORKSHOPSTATS",workshopPrice.toString())
-        Log.d("WORKSHOPSTATS",workshopRating.toString())
+    }
+
+    fun setSelected(workshopWithID: WorkshopWithID){
+        selectedWorkshop = workshopWithID
+    }
+    fun getSelected():WorkshopWithID?{
+        return selectedWorkshop
     }
 
     fun getWorkshops(){

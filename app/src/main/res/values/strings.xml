@@ -59,6 +59,18 @@
     <string name="menu_search">Pretraga</string>
     <string name="confirm">Potvrdi</string>
     <string name="cancel">Otkazi</string>
+    <string name="location_rising">Daljini Rastuce</string>
+    <string name="location_falling">Daljini Opadajuce</string>
+    <string name="workprice_rising">Ceni Rada Rastuce</string>
+    <string name="workprice_falling">Ceni Rada Opadajuce</string>
+    <string name="rating_rising">Oceni Rastuce</string>
+    <string name="rating_falling">Oceni Opadajuce</string>
+    <string name="Favorite">Zapamti</string>
+    <string name="navigate">Lokacija</string>
+
+    <string name="phoneNumberInfo">Broj telefona: %1$s</string>
+    <string name="your_review">Tvoja Ocena:</string>
+    <string name="share_your_opinion">Podeli Svoje Misljenje</string>
 
 
     <string-array name="workshops_array">

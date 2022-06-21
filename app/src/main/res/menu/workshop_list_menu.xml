@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/location_rising"
+        android:orderInCategory="100"
+        android:title="@string/location_rising"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/location_falling"
+        android:orderInCategory="100"
+        android:title="@string/location_falling"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/workprice_rising"
+        android:orderInCategory="100"
+        android:title="@string/workprice_rising"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/workprice_falling"
+        android:orderInCategory="100"
+        android:title="@string/workprice_falling"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/rating_rising"
+        android:orderInCategory="100"
+        android:title="@string/rating_rising"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/rating_falling"
+        android:orderInCategory="100"
+        android:title="@string/rating_falling"
+        app:showAsAction="never" />
+</menu>
