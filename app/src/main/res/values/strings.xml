@@ -71,6 +71,8 @@
     <string name="phoneNumberInfo">Broj telefona: %1$s</string>
     <string name="your_review">Tvoja Ocena:</string>
     <string name="share_your_opinion">Podeli Svoje Misljenje</string>
+    <string name="addReview">Dodaj Ocenu</string>
+    <string name="shareThoughts">Podeli misljenje:</string>
 
 
     <string-array name="workshops_array">

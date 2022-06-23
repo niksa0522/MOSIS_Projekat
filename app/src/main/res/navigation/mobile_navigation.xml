@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_nav_maps_to_addWorkshopFragment"
             app:destination="@id/addWorkshopFragment" />
+        <action
+            android:id="@+id/action_nav_maps_to_workshopMainFragment"
+            app:destination="@id/workshopMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewFriendFragment"
@@ -96,5 +99,25 @@
         android:id="@+id/workshopMainFragment"
         android:name="com.example.mosis_projekat.screens.workshopMain.WorkshopMainFragment"
         android:label="fragment_workshop_main"
-        tools:layout="@layout/fragment_workshop_main" />
+        tools:layout="@layout/fragment_workshop_main" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_workshopMainFragment_to_ratingDialog"
+            app:destination="@id/ratingDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/ratingDialog"
+        android:name="com.example.mosis_projekat.dialogs.RatingDialog"
+        android:label="RatingDialog" />
+    <fragment
+        android:id="@+id/workshopInfoFragment"
+        android:name="com.example.mosis_projekat.screens.workshopInfo.WorkshopInfoFragment"
+        android:label="WorkshopInfoFragment" >
+        <action
+            android:id="@+id/action_workshopInfoFragment_to_ratingDialog"
+            app:destination="@id/ratingDialog" />
+    </fragment>
 </navigation>

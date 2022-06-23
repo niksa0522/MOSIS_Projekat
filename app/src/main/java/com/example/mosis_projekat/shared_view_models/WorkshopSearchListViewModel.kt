@@ -5,15 +5,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mosis_projekat.firebase.databaseModels.Review
+import com.example.mosis_projekat.firebase.databaseModels.User
 import com.example.mosis_projekat.firebase.databaseModels.Workshop
+import com.example.mosis_projekat.firebase.realtimeDB.RealtimeHelper
 import com.example.mosis_projekat.models.WorkshopWithID
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class WorkshopSearchListViewModel : ViewModel() {
@@ -27,7 +33,13 @@ class WorkshopSearchListViewModel : ViewModel() {
 
     private var workshopList = mutableListOf<Workshop?>()
     private var workshopIdList = mutableListOf<String?>()
-    private var selectedWorkshop:WorkshopWithID? = null
+    //private var selectedWorkshop:WorkshopWithID? = null
+
+    private val _selectedWorkshop = MutableLiveData<WorkshopWithID>()
+    val selectedWorkshop: LiveData<WorkshopWithID> = _selectedWorkshop;
+
+    private val _currentUserReview = MutableLiveData<Review?>()
+    val currentUserReview: LiveData<Review?> = _currentUserReview
 
 
     private val _workshopsWithID = MutableLiveData<MutableList<WorkshopWithID>>()
@@ -41,10 +53,132 @@ class WorkshopSearchListViewModel : ViewModel() {
     }
 
     fun setSelected(workshopWithID: WorkshopWithID){
-        selectedWorkshop = workshopWithID
+        _selectedWorkshop.value = workshopWithID
+        findCurrentUserReview()
     }
     fun getSelected():WorkshopWithID?{
-        return selectedWorkshop
+        return _selectedWorkshop.value
+    }
+    fun setSelected(workshopID: String){
+        val db = FirebaseFirestore.getInstance()
+        val collection = db.collection("workshops")
+        collection.document(workshopID).get().addOnSuccessListener {
+            val workshop = it.toObject(Workshop::class.java)
+            if(workshop!=null) {
+                _selectedWorkshop.value = WorkshopWithID(workshop, workshopID)
+                findCurrentUserReview()
+            }
+        }
+    }
+
+    fun setReview(comment:String,rating:Float,oldRating:Float,isNew:Boolean){
+        val auth = FirebaseAuth.getInstance()
+        val uid = auth.uid
+        if(uid!=null){
+            if(_selectedWorkshop.value!=null){
+                val mDatabase = Firebase.database("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
+                mDatabase.reference.child("users").child(uid).get().addOnSuccessListener {
+                    val user = it.getValue(User::class.java)
+                    if(user!=null) {
+                        val review = Review(user.fname +" "+user.lname,comment,rating)
+                        _currentUserReview.value=review
+                        val db = FirebaseFirestore.getInstance()
+                        val workshopRef = db.collection("workshops").document(selectedWorkshop.value!!.id)
+                        val ratingsRef = workshopRef.collection("reviews").document(uid)
+                                db.runTransaction {
+                                    val snapshot = it.get(workshopRef)
+
+
+                                    var reviewNum = snapshot.get("numRatings",Int::class.java)!!
+                                    var avgRating = snapshot.get("avgRating",Float::class.java)!!
+                                    val uploaderUID = snapshot.getString("uploaderUID")!!
+                                    val oldRatingTotal = avgRating * reviewNum
+                                    var newRatingTotal = 0f
+                                    if(isNew){
+                                        reviewNum++
+                                        newRatingTotal = (oldRatingTotal+rating)/reviewNum
+                                        RealtimeHelper.updateRating(uid,5)
+                                        RealtimeHelper.updateRating(uploaderUID!!,3)
+                                    }
+                                    else{
+                                        newRatingTotal = (oldRatingTotal-oldRating+rating)/reviewNum
+                                    }
+                                    it.update(workshopRef,"numRatings",reviewNum)
+                                    it.update(workshopRef,"avgRating",newRatingTotal)
+                                    it.set(ratingsRef,review)
+                                    newRatingTotal
+                                }.addOnSuccessListener {
+                                    val workshop = _selectedWorkshop.value!!.copy()
+                                    workshop.workshop.avgRating=it
+                                    _selectedWorkshop.value=workshop
+                                }
+                    }
+                }
+
+            }
+        }
+    }
+    fun deleteReview(rating:Float){
+        val auth = FirebaseAuth.getInstance()
+        val uid = auth.uid
+        if(uid!=null){
+            if(_selectedWorkshop.value!=null){
+                val mDatabase = Firebase.database("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
+                mDatabase.reference.child("users").child(uid).get().addOnSuccessListener {
+                    val user = it.getValue(User::class.java)
+                    if(user!=null) {
+                        val db = FirebaseFirestore.getInstance()
+                        val workshopRef = db.collection("workshops").document(selectedWorkshop.value!!.id)
+                        _currentUserReview.value=null
+                        val ratingsRef = workshopRef.collection("reviews").document(uid)
+                        workshopRef.get().addOnSuccessListener {
+                            val workshop = it.toObject(Workshop::class.java)
+                            if(workshop!=null){
+                                db.runTransaction {
+                                    var reviewNum = workshop.numRatings
+                                    reviewNum--
+                                    val oldRatingTotal = workshop.avgRating * workshop.numRatings
+                                    var newRatingTotal = (oldRatingTotal-rating)/reviewNum
+                                    workshop.numRatings=reviewNum
+                                    workshop.avgRating=newRatingTotal
+                                    it.set(workshopRef,workshop)
+                                    it.delete(ratingsRef)
+                                    RealtimeHelper.updateRating(uid,-5)
+                                    RealtimeHelper.updateRating(workshop.uploaderUID!!,-2)
+                                    newRatingTotal
+                                }.addOnSuccessListener {
+                                    val workshop = _selectedWorkshop.value!!.copy()
+                                    workshop.workshop.avgRating=it
+                                    _selectedWorkshop.value=workshop
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            }
+        }
+    }
+    fun findCurrentUserReview(){
+        val auth = FirebaseAuth.getInstance()
+        val uid = auth.uid
+        if(uid!=null){
+            if(_selectedWorkshop.value!=null){
+                val db = FirebaseFirestore.getInstance()
+                val collection = db.collection("workshops").document(selectedWorkshop.value!!.id).collection("reviews").document(uid)
+                    .get().addOnCompleteListener(){
+                        val document = it.result
+                        if(document.exists()){
+                            val review = document.toObject(Review::class.java)
+                            _currentUserReview.value = review!!
+                        }
+                        else{
+                            _currentUserReview.value=null
+                        }
+                    }
+            }
+        }
     }
 
     fun getWorkshops(){

@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="357dp">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etWorkshopName"

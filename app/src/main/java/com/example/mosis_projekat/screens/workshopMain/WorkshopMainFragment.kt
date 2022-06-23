@@ -34,6 +34,12 @@ class WorkshopMainFragment : Fragment() {
     ): View? {
         _binding = FragmentWorkshopMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val id = arguments?.getString("id")
+        if(id!=null && id!=""){
+            sharedViewModel.setSelected(id)
+        }
+
         return root
     }
 
@@ -45,12 +51,11 @@ class WorkshopMainFragment : Fragment() {
         val pagerAdapter = SlideScreenPagerAdapter(requireActivity())
         viewPager.adapter=pagerAdapter
         viewPager.isUserInputEnabled=false
-
-        if(sharedViewModel.getSelected()==null){
-            findNavController().popBackStack()
+        (activity as AppCompatActivity).supportActionBar?.title = ""
+        sharedViewModel.selectedWorkshop.observe(viewLifecycleOwner){
+            (activity as AppCompatActivity).supportActionBar?.title = it.workshop.name +" | "+it.workshop.type
         }
 
-        (activity as AppCompatActivity).supportActionBar?.title = sharedViewModel.getSelected()!!.workshop.name +" | "+sharedViewModel.getSelected()!!.workshop.type
 
         val tabLayout = binding.tabs
         TabLayoutMediator(tabLayout,viewPager) { tab: TabLayout.Tab, i: Int ->

@@ -17,6 +17,7 @@ import com.example.mosis_projekat.firebase.databaseModels.DatabaseLocation
 import com.example.mosis_projekat.firebase.databaseModels.User
 import com.example.mosis_projekat.firebase.databaseModels.Workshop
 import com.example.mosis_projekat.helpers.BitmapHelper
+import com.example.mosis_projekat.models.WorkshopWithID
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.firebase.auth.FirebaseAuth
@@ -48,7 +49,7 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
     private lateinit var map: GoogleMap
     private val usersMap: MutableMap<String, Marker> = mutableMapOf()
     private val friendsMap: MutableMap<String, Marker> = mutableMapOf()
-    private val workshopMap: MutableMap<Workshop,Marker> = mutableMapOf()
+    private val workshopMap: MutableMap<WorkshopWithID,Marker> = mutableMapOf()
     private val storage = Firebase.storage
     private lateinit var navController: NavController
 
@@ -225,14 +226,27 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
             navController.navigate(R.id.action_nav_maps_to_viewFriendFragment,bundle)
         }else if(workshopMap.containsValue(m)){
             //otvori workshop
+            val bundle = Bundle()
+            val key = getWorkshopKey(workshopMap,m)
+            bundle.putString("id",key)
+            navController.navigate(R.id.action_nav_maps_to_workshopMainFragment,bundle)
         }
         return false
     }
-    fun getKey(map: Map<String, Marker>, target: Marker): String? {
+    private fun getKey(map: Map<String, Marker>, target: Marker): String? {
         for ((key, value) in map)
         {
             if (target == value) {
                 return key
+            }
+        }
+        return null
+    }
+    fun getWorkshopKey(map: Map<WorkshopWithID, Marker>, target: Marker): String? {
+        for ((key, value) in map)
+        {
+            if (target == value) {
+                return key.id
             }
         }
         return null
@@ -252,7 +266,7 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
                 workshops.add(workshop)
                 val m: Marker? = map.addMarker(MarkerOptions().position(LatLng(workshop.location?.lat!!, workshop.location?.lon!!)).
                 icon(BitmapDescriptorFactory.defaultMarker(getColor(workshop))))
-                workshopMap.set(workshop,m!!)
+                workshopMap.set(WorkshopWithID(workshop,doc.id),m!!)
             }
         }
     }

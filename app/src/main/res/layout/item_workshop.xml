@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:numStars="5"
         android:transformPivotX="0dp"
+        android:isIndicator="true"
         android:transformPivotY="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
