@@ -120,4 +120,22 @@
             android:id="@+id/action_workshopInfoFragment_to_ratingDialog"
             app:destination="@id/ratingDialog" />
     </fragment>
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="com.example.mosis_projekat.screens.saved.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/action_savedFragment_to_workshopMainFragment"
+            app:destination="@id/workshopMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rankingsMainFragment"
+        android:name="com.example.mosis_projekat.screens.rankings.RankingsMainFragment"
+        android:label="fragment_rankings_main"
+        tools:layout="@layout/fragment_rankings_main" >
+        <action
+            android:id="@+id/action_rankingsMainFragment_to_viewFriendFragment"
+            app:destination="@id/viewFriendFragment" />
+    </fragment>
 </navigation>

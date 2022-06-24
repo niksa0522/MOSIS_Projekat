@@ -1,4 +1,4 @@
-package com.example.mosis_projekat.screens.workshopMain
+package com.example.mosis_projekat.screens.rankings
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,51 +7,42 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import com.example.mosis_projekat.adapters.RankingsPagerAdapter
 import com.example.mosis_projekat.adapters.WorkshopPagerAdapter
-import com.example.mosis_projekat.databinding.FragmentWorkshopMainBinding
-import com.example.mosis_projekat.shared_view_models.WorkshopSearchListViewModel
+import com.example.mosis_projekat.databinding.FragmentRankingsMainBinding
+import com.example.mosis_projekat.shared_view_models.RankViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class WorkshopMainFragment : Fragment() {
+class RankingsMainFragment : Fragment() {
 
-    private var _binding: FragmentWorkshopMainBinding? = null
+    private var _binding: FragmentRankingsMainBinding? = null
     private val binding get() = _binding!!
-
-    private val sharedViewModel: WorkshopSearchListViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val viewModel:RankViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWorkshopMainBinding.inflate(inflater, container, false)
+        _binding = FragmentRankingsMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val id = arguments?.getString("id")
-        if(id!=null && id!=""){
-            sharedViewModel.setSelected(id)
-        }
-
+        viewModel.getRank()
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.rank.observe(viewLifecycleOwner){
+            (activity as AppCompatActivity).supportActionBar?.title = "Rankings | $it"
+        }
 
         val viewPager = binding.viewPager
-        val pagerAdapter = WorkshopPagerAdapter(requireActivity())
+        val pagerAdapter = RankingsPagerAdapter(requireActivity())
         viewPager.adapter=pagerAdapter
         viewPager.isUserInputEnabled=false
-        (activity as AppCompatActivity).supportActionBar?.title = ""
-        sharedViewModel.selectedWorkshop.observe(viewLifecycleOwner){
-            (activity as AppCompatActivity).supportActionBar?.title = it.workshop.name +" | "+it.workshop.type
-        }
 
 
         val tabLayout = binding.tabs
@@ -65,4 +56,6 @@ class WorkshopMainFragment : Fragment() {
         super.onDestroyView()
         _binding=null
     }
+
+
 }

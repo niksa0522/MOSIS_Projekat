@@ -20,5 +20,13 @@
             android:id="@+id/nav_maps"
             android:icon="@drawable/ic_baseline_map_24"
             android:title="@string/menu_maps" />
+        <item
+            android:id="@+id/savedFragment"
+            android:icon="@drawable/ic_baseline_bookmark_24"
+            android:title="@string/saved" />
+        <item
+            android:id="@+id/rankingsMainFragment"
+            android:icon="@drawable/ic_baseline_bookmark_24"
+            android:title="@string/ranks" />
     </group>
 </menu>

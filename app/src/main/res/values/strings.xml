@@ -73,6 +73,9 @@
     <string name="share_your_opinion">Podeli Svoje Misljenje</string>
     <string name="addReview">Dodaj Ocenu</string>
     <string name="shareThoughts">Podeli misljenje:</string>
+    <string name="saved">Omiljeni</string>
+    <string name="rankInfo">Poeni: %1$d, Rank: %2$s</string>
+    <string name="ranks">Poeni</string>
 
 
     <string-array name="workshops_array">
