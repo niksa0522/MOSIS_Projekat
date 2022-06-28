@@ -52,7 +52,11 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
     private val workshopMap: MutableMap<WorkshopWithID,Marker> = mutableMapOf()
     private val storage = Firebase.storage
     private lateinit var navController: NavController
+    var workshopTypes =  ArrayList<String>()
 
+    init{
+        workshopTypes.addAll(listOf("Mehanicar","Farbar","Limar","Vulkanizer","Pranje i Ciscenje"))
+    }
 
 
 
@@ -61,6 +65,29 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
         _friends.value = mutableMapOf<String,DatabaseLocation>()
         GetFriends()
     }*/
+
+    fun filterWorkshops(list: ArrayList<String>){
+        workshopTypes=list
+        for ((key, value) in workshopMap){
+            value.isVisible = list.contains(key.workshop.type)
+        }
+    }
+    fun showUsers(){
+        for ((key, value) in usersMap){
+            value.isVisible = true
+        }
+        for ((key, value) in friendsMap){
+            value.isVisible = true
+        }
+    }
+    fun hideUsers(){
+        for ((key, value) in usersMap){
+            value.isVisible = false
+        }
+        for ((key, value) in friendsMap){
+            value.isVisible = false
+        }
+    }
 
 
     fun setMap(map:GoogleMap,context: Context, navController: NavController){
@@ -146,10 +173,11 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
                 if((key!!) != uid) {
                     val m: Marker? = map.addMarker(MarkerOptions().position(LatLng(loc!!.lat!!, loc.lon!!)))
                     if (friendsList.contains(snapshot.key)) {
+                        setupFriendMarker(key,database,context,m!!)
                         friendsMap.set(key, m!!)
-                        setupFriendMarker(key,database,context,m)
                     }
                     else {
+                        m?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker4))
                         usersMap.set(key, m!!)
 
                     }
@@ -170,8 +198,9 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
                         }
                         else{
                             val m: Marker? = map.addMarker(MarkerOptions().position(LatLng(loc!!.lat!!, loc.lon!!)))
+                            setupFriendMarker(key,database,context,m!!)
                             friendsMap.set(key, m!!)
-                            setupFriendMarker(key,database,context,m)
+
                             //dodaj da izgleda lepo
                         }
                         /*friendsMap.set(key, loc!!)
@@ -185,6 +214,7 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
                         }
                         else{ //ako ne postoji dodaj
                             val m: Marker? = map.addMarker(MarkerOptions().position(LatLng(loc!!.lat!!, loc.lon!!)))
+                            m?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker4))
                             usersMap.set(key, m!!)
                         }
                         /*usersMap.set(key, loc!!)
@@ -273,8 +303,8 @@ class MapsViewModel : ViewModel(), GoogleMap.OnMarkerClickListener {
     private fun getColor(w:Workshop):Float{
         return when(w.type){
             "Mehanicar" -> BitmapDescriptorFactory.HUE_BLUE
-            "Limarija" -> BitmapDescriptorFactory.HUE_GREEN
-            "Farba" -> BitmapDescriptorFactory.HUE_RED
+            "Limar" -> BitmapDescriptorFactory.HUE_GREEN
+            "Farbar" -> BitmapDescriptorFactory.HUE_RED
             "Vulkanizer" -> BitmapDescriptorFactory.HUE_ORANGE
             "Pranje i Ciscenje" ->BitmapDescriptorFactory.HUE_MAGENTA
             else -> BitmapDescriptorFactory.HUE_YELLOW

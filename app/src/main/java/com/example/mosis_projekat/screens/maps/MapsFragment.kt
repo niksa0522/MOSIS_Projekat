@@ -8,11 +8,12 @@ import androidx.fragment.app.Fragment
 
 import android.os.Bundle
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mosis_projekat.activities.MainActivity
@@ -51,6 +52,7 @@ class MapsFragment : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
         map = googleMap
+        map.clear()
         MapsViewModel.setMap(map,requireContext(),findNavController())
         //val home:LatLng = LatLng(43.3147738,21.898629)
 
@@ -114,26 +116,6 @@ class MapsFragment : Fragment() {
         }
     }
 
-
-    /*private fun setMapLongClick(map: GoogleMap) {
-        map.setOnMapLongClickListener { latLng ->
-            // A snippet is additional text that's displayed after the title.
-            val snippet = String.format(
-                Locale.getDefault(),
-                "Lat: %1$.5f, Long: %2$.5f",
-                latLng.latitude,
-                latLng.longitude
-            )
-            map.addMarker(
-                MarkerOptions()
-                    .position(latLng)
-                    .title("Dropped Pin")
-                    .snippet(snippet)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-            )
-        }
-    }*/
-
     private fun isPermissionGranted() : Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),
@@ -151,7 +133,7 @@ class MapsFragment : Fragment() {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
-    //bolje napravi permisije
+    //TODO bolje napravi permisije
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()){
             isGranted: Boolean->
@@ -184,15 +166,18 @@ class MapsFragment : Fragment() {
 
                     //add firebase update
                 }
-                map.animateCamera(CameraUpdateFactory.newLatLng(
+                /*map.animateCamera(CameraUpdateFactory.newLatLng(
                     LatLng(
                         newLocation.latitude,
                         newLocation.longitude
                     )
-                ))
+                ))*/
                 if(lastLocation == null || newLocation.latitude!=lastLocation?.latitude || newLocation.longitude!=lastLocation?.longitude ){
                     lastLocation=newLocation
                     MapsViewModel.updateLocationFirebase(DatabaseLocation(newLocation.latitude,newLocation.longitude))
+                    if(false){
+                        //TODO prebaci ovo u servis
+                    }
                 }
 
             }
@@ -215,27 +200,52 @@ class MapsFragment : Fragment() {
             bundle.putDouble("long",lastLocation!!.longitude)
             findNavController().navigate(R.id.action_nav_maps_to_addWorkshopFragment,bundle)
         }
-
-
-
-        //observer se ne pali na mapu, moras da sredis to, pogledaj kako sledeceg puta
-        /*MapsViewModel.users.observe(viewLifecycleOwner) {
-            if (this::map.isInitialized) {
-                map.clear()
-                for (i in it) {
-                    val locat = LatLng(i.value.lat!!, i.value.lon!!)
-                    //dodaj ime i opis kasnije
-                    val mar = map.addMarker(
-                        MarkerOptions()
-                            .position(locat)
-                            .flat(true)
-                    )
-                }
-            }
-        }*/
-
+        setHasOptionsMenu(true)
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.map_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_show_users -> {
+                if(item.isCheckable){
+                    if(item.isChecked){
+                        MapsViewModel.hideUsers()
+                        item.isChecked=false
+                    }else{
+                        MapsViewModel.showUsers()
+                        item.isChecked=true
+                    }
+                }
+                true
+            }
+            R.id.action_show_workshops ->{
+                openWorkshopTypeDialog()
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
+    }
+    private fun openWorkshopTypeDialog(){
+        setFragmentResultListener("Filtriraj radionice"){ requestKey, bundle ->
+            val result = bundle.getStringArrayList("list")
+            if(result!=null){
+                MapsViewModel.filterWorkshops(result)
+                MapsViewModel.workshopTypes=result
+            }
+            Log.d("WORKSHOPLIST",result.toString());
+        }
+        val bundle=Bundle()
+        bundle.putString("type","Filtriraj radionice")
+        bundle.putStringArrayList("chosen",MapsViewModel.workshopTypes)
+        findNavController().navigate(R.id.action_nav_maps_to_workshopTypeDialog,bundle)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,

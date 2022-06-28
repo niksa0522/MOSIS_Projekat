@@ -1,4 +1,4 @@
-package com.example.mosis_projekat.screens.friends
+package com.example.mosis_projekat.adapters
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
@@ -17,11 +17,11 @@ import java.util.*
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 
-class MyBTUserRecyclerViewAdapter(
+class BTUserAdapter(
     private val values: List<BluetoothDevice>,
     private val adapter: BluetoothAdapter,
     private val navController: NavController
-) : RecyclerView.Adapter<MyBTUserRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<BTUserAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -56,7 +56,7 @@ class MyBTUserRecyclerViewAdapter(
     }
 
     private fun ConnectToDevice(device:BluetoothDevice){
-        val conn:ConnectThread=ConnectThread(device)
+        val conn: ConnectThread =ConnectThread(device)
         conn.start()
     }
     @SuppressLint("MissingPermission")
@@ -90,7 +90,7 @@ class MyBTUserRecyclerViewAdapter(
             }
         }
         fun manageMyConnectedSocket(socket: BluetoothSocket){
-            val conn:ConnectionThread = ConnectionThread(socket)
+            val conn: ConnectionThread = ConnectionThread(socket)
             conn.start()
 
         }

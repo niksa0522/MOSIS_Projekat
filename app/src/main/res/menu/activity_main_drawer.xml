@@ -28,5 +28,9 @@
             android:id="@+id/rankingsMainFragment"
             android:icon="@drawable/ic_baseline_bookmark_24"
             android:title="@string/ranks" />
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_baseline_bookmark_24"
+            android:title="@string/settings" />
     </group>
 </menu>

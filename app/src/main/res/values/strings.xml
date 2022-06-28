@@ -75,7 +75,10 @@
     <string name="shareThoughts">Podeli misljenje:</string>
     <string name="saved">Omiljeni</string>
     <string name="rankInfo">Poeni: %1$d, Rank: %2$s</string>
+    <string name="rankInfoNewLine">Poeni: %1$d \nRank: %2$s</string>
     <string name="ranks">Poeni</string>
+    <string name="action_show_users">Prikazi korisnike</string>
+    <string name="action_show_workshops">Filtriraj radionice</string>
 
 
     <string-array name="workshops_array">
@@ -85,6 +88,23 @@
         <item>Vulkanizer</item>
         <item>Pranje i Ciscenje</item>
     </string-array>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="share_location">Deli lokaciju</string>
+    <string name="get_notifications">Notifikacije</string>
+    <string name="settings">Opcije</string>
 
 
 </resources>

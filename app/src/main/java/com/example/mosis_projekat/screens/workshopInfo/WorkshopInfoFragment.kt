@@ -51,7 +51,11 @@ class WorkshopInfoFragment : Fragment() {
         }
         sharedViewModel.currentUserReview.observe(viewLifecycleOwner){
             if(it!=null){
-                binding.textYourOpinion.text = it.comment
+                if(it.comment==""){
+                    binding.textYourOpinion.text = "Niste ostavili komentar"
+                }else{
+                    binding.textYourOpinion.text = it.comment
+                }
                 binding.yourRatingBar.rating = it.rating
                 binding.ratingBar.onRatingBarChangeListener=null
                 binding.btnMore.visibility=View.VISIBLE

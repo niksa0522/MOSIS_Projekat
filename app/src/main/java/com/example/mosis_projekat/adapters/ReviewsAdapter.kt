@@ -2,6 +2,7 @@ package com.example.mosis_projekat.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mosis_projekat.databinding.ItemReviewBinding
@@ -24,7 +25,16 @@ class ReviewsAdapter(private val reviews:List<Review>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.textComment.setText(reviews[position].comment)
+        if(reviews[position].comment==""){
+            holder.binding.textComment.visibility= View.GONE
+            holder.binding.guidelineHorizonal.setGuidelinePercent(1f)
+        }
+        else{
+            holder.binding.textComment.visibility= View.VISIBLE
+            holder.binding.guidelineHorizonal.setGuidelinePercent(0.5f)
+            holder.binding.textComment.setText(reviews[position].comment)
+        }
+
         holder.binding.textName.setText(reviews[position].userName)
         holder.binding.yourRatingBar.rating = reviews[position].rating
     }

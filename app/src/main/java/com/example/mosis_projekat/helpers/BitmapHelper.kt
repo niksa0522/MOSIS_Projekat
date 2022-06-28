@@ -29,7 +29,7 @@ object BitmapHelper {
                 val shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
                 val matrix = Matrix()
                 val scale: Float = dp(52f,context) / bitmap.width.toFloat()
-                matrix.postTranslate(dp(5f,context).toFloat(), dp(5f,context).toFloat())
+                matrix.postTranslate(dp(0f,context).toFloat(), dp(0f,context).toFloat())
                 matrix.postScale(scale, scale)
                 roundPaint.setShader(shader)
                 shader.setLocalMatrix(matrix)

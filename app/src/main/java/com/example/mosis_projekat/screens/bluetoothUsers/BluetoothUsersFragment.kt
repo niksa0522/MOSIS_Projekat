@@ -1,4 +1,4 @@
-package com.example.mosis_projekat.screens.friends
+package com.example.mosis_projekat.screens.bluetoothUsers
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.mosis_projekat.R
+import com.example.mosis_projekat.adapters.BTUserAdapter
 
 /**
  * A fragment representing a list of Items.
@@ -28,7 +29,7 @@ class BluetoothUsersFragment : Fragment() {
 
     private var columnCount = 1
     private var bluetoothDevices = mutableListOf<BluetoothDevice>()
-    private lateinit var adapter: MyBTUserRecyclerViewAdapter
+    private lateinit var adapter: BTUserAdapter
     private lateinit var bluetoothAdapter: BluetoothAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +65,7 @@ class BluetoothUsersFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
             }
-            adapter = MyBTUserRecyclerViewAdapter(bluetoothDevices, bluetoothAdapter,findNavController())
+            adapter = BTUserAdapter(bluetoothDevices, bluetoothAdapter,findNavController())
             view.adapter = adapter
         }
 

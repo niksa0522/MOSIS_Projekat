@@ -62,7 +62,7 @@ class AddWorkshopFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val items = listOf("Mehanicar","Limarija","Farba","Vulkanizer","Pranje i Ciscenje")
+        val items = listOf("Mehanicar","Farbar","Limar","Vulkanizer","Pranje i Ciscenje")
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_list_item, items)
         binding.autoCompleteWorkshopType.setAdapter(adapter)
 

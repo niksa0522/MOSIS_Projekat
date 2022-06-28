@@ -1,4 +1,4 @@
-package com.example.mosis_projekat.screens.friends
+package com.example.mosis_projekat.screens.viewFriend
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.mosis_projekat.screens.friends.Models.ViewFriendViewModel
 import com.example.mosis_projekat.databinding.FragmentViewFriendBinding
 
 
@@ -59,12 +58,9 @@ class ViewFriendFragment : Fragment() {
         ViewModel.phoneNum.observe(viewLifecycleOwner){
             binding.PhoneNum.setText(it)
         }
-        //TODO( Dodaj Rank kasnije)
-        //dodaj rank kasnije
-
-
-
-
+        ViewModel.rank.observe(viewLifecycleOwner){
+            binding.scoreAndRank.text=it
+        }
     }
 
     override fun onDestroyView() {

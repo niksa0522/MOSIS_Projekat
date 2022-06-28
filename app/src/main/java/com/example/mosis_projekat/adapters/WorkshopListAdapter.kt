@@ -25,7 +25,7 @@ class WorkshopListAdapter(private var workshopList:MutableList<WorkshopWithID>,p
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.textName.text = workshopList[position].workshop.name
-        holder.binding.textType.text = workshopList[position].workshop.type
+        holder.binding.textType.text = "Type: " + workshopList[position].workshop.type
         holder.binding.ratingBar.rating = workshopList[position].workshop.avgRating
         holder.itemView.setOnClickListener {
             listener.OnItemClick(workshopList[position])

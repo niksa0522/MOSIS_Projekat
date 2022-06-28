@@ -1,4 +1,4 @@
-package com.example.mosis_projekat.screens.friends.Models
+package com.example.mosis_projekat.screens.viewFriend
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.mosis_projekat.R
 import com.example.mosis_projekat.firebase.databaseModels.User
+import com.example.mosis_projekat.helpers.RankHelper
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -30,6 +32,10 @@ class ViewFriendViewModel : ViewModel() {
     private val _phoneNum = MutableLiveData<String>()
 
     val phoneNum: LiveData<String> = _phoneNum
+
+    private val _rank = MutableLiveData<String>()
+
+    val rank: LiveData<String> = _rank
 
     //dodaj rank kasnije
 
@@ -56,8 +62,11 @@ class ViewFriendViewModel : ViewModel() {
                 override fun onLoadCleared(placeholder: Drawable?) {
 
                 }
-
             })
+        }
+        database.reference.child("ranks").child(uid!!).get().addOnSuccessListener {
+            val rank = it.getValue(Int::class.java)
+            _rank.value = context.getString(R.string.rankInfoNewLine,rank!!, RankHelper.getRank(rank!!))
         }
     }
 

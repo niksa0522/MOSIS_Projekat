@@ -13,9 +13,12 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mosis_projekat.R
+import com.example.mosis_projekat.adapters.FriendAdapter
 import com.example.mosis_projekat.databinding.FragmentFriendsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -25,7 +28,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
 
-class FriendsFragment : Fragment() {
+class FriendsFragment : Fragment(),FriendAdapter.FriendClickListener {
 
     private var _binding: FragmentFriendsBinding? = null
 
@@ -34,15 +37,14 @@ class FriendsFragment : Fragment() {
     private val binding get() = _binding!!
     private var sharing: Boolean = false
     private lateinit var bluetoothAdapter:BluetoothAdapter
+    private val viewModel: FriendsViewModel by viewModels()
+    private lateinit var adapter:FriendAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(FriendsViewModel::class.java)
-
         _binding = FragmentFriendsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -52,6 +54,7 @@ class FriendsFragment : Fragment() {
                 getRequiredPermisions(),
             1
         )
+        viewModel.getFriends()
 
         return root
     }
@@ -60,6 +63,13 @@ class FriendsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.friends.observe(viewLifecycleOwner){
+            adapter = FriendAdapter(it,this)
+            binding.recyclerFriends.adapter=adapter
+        }
+        binding.recyclerFriends.layoutManager=LinearLayoutManager(requireContext())
+
     }
 
     override fun onDestroyView() {
@@ -227,6 +237,12 @@ class FriendsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onFriendClick(uid: String) {
+        val bundle = Bundle()
+        bundle.putString("uid",uid)
+        findNavController().navigate(R.id.action_nav_friends_to_viewFriendFragment,bundle)
     }
 
 }

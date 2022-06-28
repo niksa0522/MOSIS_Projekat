@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/bluetoothUsersFragment"
-        android:name="com.example.mosis_projekat.screens.friends.BluetoothUsersFragment"
+        android:name="com.example.mosis_projekat.screens.bluetoothUsers.BluetoothUsersFragment"
         android:label="fragment_bluetooth_users_list"
         tools:layout="@layout/fragment_bluetooth_users_list" />
     <fragment
@@ -48,10 +48,13 @@
         <action
             android:id="@+id/action_nav_maps_to_workshopMainFragment"
             app:destination="@id/workshopMainFragment" />
+        <action
+            android:id="@+id/action_nav_maps_to_workshopTypeDialog"
+            app:destination="@id/workshopTypeDialog" />
     </fragment>
     <fragment
         android:id="@+id/viewFriendFragment"
-        android:name="com.example.mosis_projekat.screens.friends.ViewFriendFragment"
+        android:name="com.example.mosis_projekat.screens.viewFriend.ViewFriendFragment"
         android:label="fragment_view_friend"
         tools:layout="@layout/fragment_view_friend" >
         <argument
@@ -138,4 +141,8 @@
             android:id="@+id/action_rankingsMainFragment_to_viewFriendFragment"
             app:destination="@id/viewFriendFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.mosis_projekat.screens.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
