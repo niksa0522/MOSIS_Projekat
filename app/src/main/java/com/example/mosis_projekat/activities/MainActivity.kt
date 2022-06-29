@@ -1,10 +1,14 @@
 package com.example.mosis_projekat.activities
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.databinding.ActivityMainBinding
+import com.example.mosis_projekat.helpers.PermissionHelper
+import com.example.mosis_projekat.helpers.ServiceHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -58,6 +64,23 @@ class MainActivity : AppCompatActivity() {
         tvName.setText(auth.currentUser!!.displayName)
         Glide.with(this).load(auth.currentUser!!.photoUrl).into(profilePic)
         tvLogout.setOnClickListener{Logout()}
+        if(PermissionHelper.isLocationPermissionGranted(this)) {
+            ServiceHelper.startService(this)
+        }
+        else{
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()){
+            isGranted: Boolean->
+        if(isGranted){
+            ServiceHelper.startService(this)
+            //trackLocation()
+        }
+        else{
+            Toast.makeText(this,"Servis za lokaciju ne radi, dozvoli permisiju u opcijama",Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -66,9 +89,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun Logout(){
+
         auth.signOut()
         val i: Intent = Intent(this, LoginActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        ServiceHelper.stopService(this)
         startActivity(i)
         finish()
     }
@@ -82,6 +107,8 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         if(auth.currentUser == null){
             val i: Intent = Intent(this, LoginActivity::class.java)
+            ServiceHelper.stopService(this)
+            auth.signOut()
             i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(i)
             finish()

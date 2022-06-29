@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.databinding.FragmentDialogWorkshopsBinding
 import com.example.mosis_projekat.databinding.FragmentSearchWorkshopBinding
+import com.example.mosis_projekat.helpers.PermissionHelper
 import com.example.mosis_projekat.shared_view_models.WorkshopSearchListViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -79,7 +80,7 @@ class SearchWorkshopFragment : Fragment() {
     }
 
     private fun setupLocationTracking(){
-        if(isPermissionGranted()){
+        if(PermissionHelper.isLocationPermissionGranted(requireContext())){
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
             getLocationAndGoToSearch()
         }else{
@@ -102,14 +103,6 @@ class SearchWorkshopFragment : Fragment() {
         if(isGranted){
             setupLocationTracking()
         }
-    }
-    private fun isPermissionGranted() : Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onDestroyView() {

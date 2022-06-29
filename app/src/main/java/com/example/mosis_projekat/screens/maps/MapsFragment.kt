@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mosis_projekat.activities.MainActivity
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.firebase.databaseModels.DatabaseLocation
+import com.example.mosis_projekat.helpers.PermissionHelper
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -77,9 +78,9 @@ class MapsFragment : Fragment() {
         }
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoomLevel))
         //map.addMarker(MarkerOptions().position(home))
-        if(isPermissionGranted()) {
+        if(PermissionHelper.isLocationPermissionGranted(requireContext())) {
             enableMyLocation()
-            trackLocation()
+            //trackLocation()
         }
         else{
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -102,7 +103,7 @@ class MapsFragment : Fragment() {
 
 
     private fun setupLocationTracking(){
-        if(isPermissionGranted()){
+        if(PermissionHelper.isLocationPermissionGranted(requireContext())){
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         }else{
             requestPermissionLauncherFLC.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -116,17 +117,9 @@ class MapsFragment : Fragment() {
         }
     }
 
-    private fun isPermissionGranted() : Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-    }
     @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
-        if (isPermissionGranted()) {
+        if (PermissionHelper.isLocationPermissionGranted(requireContext())) {
             map.isMyLocationEnabled = true
         }
         else {
@@ -139,7 +132,7 @@ class MapsFragment : Fragment() {
             isGranted: Boolean->
         if(isGranted){
             enableMyLocation()
-            trackLocation()
+            //trackLocation()
         }
     }
 
@@ -253,7 +246,7 @@ class MapsFragment : Fragment() {
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
                 enableMyLocation()
-                trackLocation()
+                //trackLocation()
             }
         }
     }

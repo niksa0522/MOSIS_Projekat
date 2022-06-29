@@ -1,5 +1,6 @@
 package com.example.mosis_projekat.firebase.realtimeDB
 
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -15,5 +16,13 @@ object RealtimeHelper {
             }
         }
 
+    }
+    fun deleteLocation(){
+        val mDatabase = Firebase.database("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
+        val auth = Firebase.auth
+        val uid = auth.uid
+        if(uid!=null && uid!=""){
+            mDatabase.reference.child("locations").child(uid).removeValue()
+        }
     }
 }

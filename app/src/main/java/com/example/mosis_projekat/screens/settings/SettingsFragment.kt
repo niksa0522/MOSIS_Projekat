@@ -1,5 +1,7 @@
 package com.example.mosis_projekat.screens.settings
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,9 @@ import android.view.ViewGroup
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.example.mosis_projekat.R
+import com.example.mosis_projekat.firebase.realtimeDB.RealtimeHelper
+import com.example.mosis_projekat.helpers.ServiceHelper
+import com.example.mosis_projekat.services.LocationService
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private var preferenceLocation: SwitchPreferenceCompat? = null
@@ -28,6 +33,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
             preferenceLocation!!.setOnPreferenceChangeListener { preference, newValue ->
                     val test = newValue as Boolean
                     Log.d("SHAREDPREF",test.toString())
+
+                if(test){
+                    ServiceHelper.startService(requireContext())
+
+                }
+                else{
+                    ServiceHelper.stopService(requireContext())
+                }
                 //TODO pali i gasi servis
                 //TODO takodje u activity kada se logout gasi i kad se login pali
 
@@ -35,7 +48,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
         if(preferenceNotification!=null){
-            preferenceLocation!!.setOnPreferenceChangeListener { preference, newValue ->
+            preferenceNotification!!.setOnPreferenceChangeListener { preference, newValue ->
                 val test = newValue as Boolean
                 Log.d("SHAREDPREF",test.toString())
                 //TODO pali i gasi servis
