@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.Guideline
@@ -48,55 +47,28 @@
             android:id="@+id/text_add_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:textSize="18sp"
             android:textColor="@color/black"
-            android:text="@string/addReview"
+            android:text="@string/info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <RatingBar
-            android:id="@+id/your_rating_bar"
-            style="@style/RatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <TextView
+            android:id="@+id/text_workshop_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:numStars="5"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineButtons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_add_review" />
-
-        <TextView
-            android:id="@+id/text_share_your_thouhts_review"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="16sp"
-            android:text="@string/shareThoughts"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/your_rating_bar" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/YourOpinion"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            app:errorIconDrawable="@drawable/ic_error"
-            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineButtons"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_share_your_thouhts_review">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textYourOpinion"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textNoSuggestions|textMultiLine"
-                android:gravity="top"
-                android:textAlignment="textStart"
-                android:textColorHint="#757575" />
-        </com.google.android.material.textfield.TextInputLayout>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineButtons"
             android:layout_width="wrap_content"
@@ -109,20 +81,9 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@string/confirm"
+            android:text="@string/close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guidelineButtons" />
-
-        <Button
-            android:id="@+id/btnCancel"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnConfirm"
             app:layout_constraintTop_toTopOf="@id/guidelineButtons" />
 
 

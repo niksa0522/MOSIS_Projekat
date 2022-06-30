@@ -6,10 +6,6 @@
         app:defaultValue="true"
         app:key="share_location"
         app:title="@string/share_location" />
-        <SwitchPreferenceCompat
-            app:key="notifications"
-            app:defaultValue="true"
-            app:title="@string/get_notifications" />
 
 
 </PreferenceScreen>

@@ -105,6 +105,17 @@
     <string name="share_location">Deli lokaciju</string>
     <string name="get_notifications">Notifikacije</string>
     <string name="settings">Podesavanja</string>
+    <string name="no_reviews">Nema ocena</string>
+    <string name="no_friends">Nemas prijatelje</string>
+    <string name="info">Informacije</string>
+    <string name="close">Zatvori</string>
+    <string name="bluetoothUsers">Bluetooth uredjaji</string>
+    <string name="maps">Mapa</string>
+    <string name="friend">Prijatelj</string>
+    <string name="addWorkshop">Dodaj Radionicu</string>
+    <string name="list">Lista Radionica</string>
+    <string name="savedWorkshops">Omiljene radionice</string>
+    <string name="ranksList">Rang lista</string>
 
 
 </resources>

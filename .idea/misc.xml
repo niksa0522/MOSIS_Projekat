@@ -21,6 +21,7 @@
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_bluetooth_users.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_bluetooth_users_list.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_dialog_rating.xml" value="0.36666666666666664" />
+        <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_dialog_workshop_info.xml" value="0.21666666666666667" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_dialog_workshops.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_friends.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
@@ -31,6 +32,7 @@
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_register.xml" value="0.25" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_saved.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_search_workshop.xml" value="0.36666666666666664" />
+        <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_slideshow.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_view_friend.xml" value="0.33" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_workshop_info.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/layout/fragment_workshop_list.xml" value="0.16893115942028986" />
@@ -48,6 +50,7 @@
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/menu/map_menu.xml" value="0.22447916666666667" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/menu/review_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/menu/workshop_list_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/MOSIS_Projekat/app/src/main/res/menu/workshop_menu.xml" value="0.21666666666666667" />
         <entry key="..\:/MOSIS_Projekat/app/src/main/res/xml/root_preferences.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.1" />
         <entry key="..\:/Users/androidpraksa2/AndroidStudioProjects/MOSIS_Projekat/app/src/main/res/drawable/ic_baseline_attach_money_24_green.xml" value="0.1" />

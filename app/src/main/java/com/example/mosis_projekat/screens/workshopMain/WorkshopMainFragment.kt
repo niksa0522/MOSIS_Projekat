@@ -52,13 +52,24 @@ class WorkshopMainFragment : Fragment() {
         sharedViewModel.selectedWorkshop.observe(viewLifecycleOwner){
             (activity as AppCompatActivity).supportActionBar?.title = it.workshop.name +" | "+it.workshop.type
         }
+        if(sharedViewModel.selectedWorkshop.value!=null){
+            (activity as AppCompatActivity).supportActionBar?.title = sharedViewModel.selectedWorkshop.value!!.workshop.name +" | "+sharedViewModel.selectedWorkshop.value!!.workshop.type
+        }
 
 
         val tabLayout = binding.tabs
         TabLayoutMediator(tabLayout,viewPager) { tab: TabLayout.Tab, i: Int ->
             tab.text = pagerAdapter.fragmentNames[i]
         }.attach()
+        setHasOptionsMenu(false)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(sharedViewModel.selectedWorkshop.value!=null){
+            (activity as AppCompatActivity).supportActionBar?.title = sharedViewModel.selectedWorkshop.value!!.workshop.name +" | "+sharedViewModel.selectedWorkshop.value!!.workshop.type
+        }
     }
 
     override fun onDestroyView() {

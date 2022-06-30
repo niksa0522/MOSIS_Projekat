@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -33,11 +34,19 @@ class RankingsFriendsFragment : Fragment(),UserRanksListAdapter.UserClickInterfa
         super.onViewCreated(view, savedInstanceState)
         val recyclerWorkshops = view.findViewById<RecyclerView>(R.id.recyclerUsers)
         viewModel.friendRanks.observe(viewLifecycleOwner){
-            var list = mutableListOf<UserWithRank>()
-            list.addAll(it)
-            list.reverse()
-            adapter = UserRanksListAdapter(list,this)
-            recyclerWorkshops.adapter = adapter
+            if(it.size>0) {
+                var list = mutableListOf<UserWithRank>()
+                list.addAll(it)
+                list.reverse()
+                adapter = UserRanksListAdapter(list, this)
+                recyclerWorkshops.adapter = adapter
+                val text = view.findViewById<TextView>(R.id.text_no_reviews)
+                text.visibility=View.GONE
+            }
+            else{
+            val text = view.findViewById<TextView>(R.id.text_no_reviews)
+            text.visibility = View.VISIBLE
+            }
         }
         recyclerWorkshops.layoutManager= LinearLayoutManager(requireContext())
         recyclerWorkshops.addItemDecoration( DividerItemDecoration(

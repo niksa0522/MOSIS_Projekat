@@ -1,5 +1,6 @@
 package com.example.mosis_projekat.screens.addWorkshop
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -19,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.firebase.databaseModels.DatabaseLocation
 import com.example.mosis_projekat.databinding.FragmentAddWorkshopBinding
+import com.example.mosis_projekat.helpers.PermissionHelper
 import java.io.FileDescriptor
 import java.io.IOException
 
@@ -115,8 +117,6 @@ class AddWorkshopFragment : Fragment() {
         viewModel.addWorkshop(name,phoneNumber,type,description,price, location)
     }
 
-//TODO dodaj permision pitanje
-
     val resultLauncherCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result-> if(result.resultCode == Activity.RESULT_OK){
         val data: Intent? = result.data
@@ -136,6 +136,13 @@ class AddWorkshopFragment : Fragment() {
         }
     }
     }
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()){
+            isGranted: Boolean->
+        if(isGranted){
+            takePicture()
+        }
+    }
 
     private fun uriToBitmap(selectedFileUri: Uri): Bitmap? {
         try {
@@ -151,9 +158,13 @@ class AddWorkshopFragment : Fragment() {
     }
 
     private fun takePicture(){
-        //TODO dodaj pitanje za permisije
-        val cameraIntent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        resultLauncherCamera.launch(cameraIntent)
+        if(PermissionHelper.isCameraPermissionGranted(requireContext())){
+            val cameraIntent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            resultLauncherCamera.launch(cameraIntent)
+        }
+        else{
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
     }
     private fun selectPicture(){
         val intent: Intent = Intent(Intent.ACTION_PICK)

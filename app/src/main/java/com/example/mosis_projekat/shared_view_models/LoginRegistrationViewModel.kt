@@ -133,10 +133,12 @@ class LoginRegistrationViewModel : ViewModel() {
                 val user = User(fName.value,lName.value,imageUrl,_phoneNum.value)
                 val database = Firebase.database("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
                 val userRef = database.reference.child("users").child(userID).setValue(user)
+                database.reference.child("ranks").child(userID).setValue(0)
                 val profileUpdate = userProfileChangeRequest {
                     displayName = "${fName.value} ${lName.value}"
                     photoUri = Uri.parse(imageUrl)
                 }
+
                 auth.currentUser!!.updateProfile(profileUpdate)
                 val i: Intent = Intent(activity, MainActivity::class.java)
                 i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

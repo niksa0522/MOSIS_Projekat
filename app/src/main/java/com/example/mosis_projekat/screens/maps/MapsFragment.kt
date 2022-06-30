@@ -55,7 +55,6 @@ class MapsFragment : Fragment() {
         map = googleMap
         map.clear()
         MapsViewModel.setMap(map,requireContext(),findNavController())
-        //val home:LatLng = LatLng(43.3147738,21.898629)
 
 
 
@@ -64,7 +63,6 @@ class MapsFragment : Fragment() {
         val zoomLevel = 17f
         fusedLocationClient?.lastLocation?.addOnCompleteListener {
             if(it.result.latitude!=null && it.result.longitude!=null) {
-                //mozda skloni ovo
                     map.moveCamera(
                     CameraUpdateFactory.newLatLngZoom(
                         LatLng(
@@ -76,11 +74,8 @@ class MapsFragment : Fragment() {
                 lastLocation=it.result
             }
         }
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoomLevel))
-        //map.addMarker(MarkerOptions().position(home))
         if(PermissionHelper.isLocationPermissionGranted(requireContext())) {
             enableMyLocation()
-            //trackLocation()
         }
         else{
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -88,18 +83,6 @@ class MapsFragment : Fragment() {
 
     }
 
-    @SuppressLint("MissingPermission")
-    private fun trackLocation(){
-        val locationRequest = LocationRequest.create().apply {
-            interval = 1000
-            fastestInterval = 500
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
-
-        fusedLocationClient?.requestLocationUpdates(locationRequest,
-            locationCallback,
-            Looper.getMainLooper())
-    }
 
 
     private fun setupLocationTracking(){
@@ -132,7 +115,6 @@ class MapsFragment : Fragment() {
             isGranted: Boolean->
         if(isGranted){
             enableMyLocation()
-            //trackLocation()
         }
     }
 
@@ -141,42 +123,6 @@ class MapsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                lateinit var newLocation:Location
-                for (location in locationResult.locations){
-                    /*map.moveCamera(
-                        CameraUpdateFactory.newLatLng(
-                            LatLng(
-                                location.latitude,
-                                location.longitude
-                            )
-                        )
-                    )*/
-                    newLocation = location
-
-
-                    //add firebase update
-                }
-                /*map.animateCamera(CameraUpdateFactory.newLatLng(
-                    LatLng(
-                        newLocation.latitude,
-                        newLocation.longitude
-                    )
-                ))*/
-                if(lastLocation == null || newLocation.latitude!=lastLocation?.latitude || newLocation.longitude!=lastLocation?.longitude ){
-                    lastLocation=newLocation
-                    MapsViewModel.updateLocationFirebase(DatabaseLocation(newLocation.latitude,newLocation.longitude))
-                    if(false){
-                        //TODO prebaci ovo u servis
-                    }
-                }
-
-            }
-        }
-
-
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
@@ -237,17 +183,5 @@ class MapsFragment : Fragment() {
         bundle.putString("type","Filtriraj radionice")
         bundle.putStringArrayList("chosen",MapsViewModel.workshopTypes)
         findNavController().navigate(R.id.action_nav_maps_to_workshopTypeDialog,bundle)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray) {
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
-                enableMyLocation()
-                //trackLocation()
-            }
-        }
     }
 }

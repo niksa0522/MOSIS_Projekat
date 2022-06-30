@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -36,7 +37,15 @@ class WorkshopReviewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerReviews)
         viewModel.reviews.observe(viewLifecycleOwner){
-            recyclerView.adapter = ReviewsAdapter(it)
+            if(it.size>0) {
+                recyclerView.adapter = ReviewsAdapter(it)
+                val text = view.findViewById<TextView>(R.id.text_no_reviews)
+                text.visibility = View.GONE
+            }
+            else{
+                val text = view.findViewById<TextView>(R.id.text_no_reviews)
+                text.visibility = View.VISIBLE
+            }
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.addItemDecoration( DividerItemDecoration(

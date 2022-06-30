@@ -17,6 +17,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.databinding.ActivityMainBinding
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_friends, R.id.nav_search,R.id.nav_maps,R.id.savedFragment,R.id.rankingsMainFragment,R.id.settingsFragment
+                R.id.nav_maps,R.id.nav_friends, R.id.nav_search,R.id.savedFragment,R.id.rankingsMainFragment,R.id.settingsFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         Glide.with(this).load(auth.currentUser!!.photoUrl).into(profilePic)
         tvLogout.setOnClickListener{Logout()}
         if(PermissionHelper.isLocationPermissionGranted(this)) {
-            ServiceHelper.startService(this)
+            startService()
         }
         else{
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()){
             isGranted: Boolean->
         if(isGranted){
-            ServiceHelper.startService(this)
+            startService()
             //trackLocation()
         }
         else{
@@ -96,6 +97,16 @@ class MainActivity : AppCompatActivity() {
         ServiceHelper.stopService(this)
         startActivity(i)
         finish()
+    }
+
+    private fun startService(){
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val service = sharedPreferences.getBoolean("share_location",false)
+        if(service){
+            ServiceHelper.startService(this)
+        }else{
+            ServiceHelper.stopService(this)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
