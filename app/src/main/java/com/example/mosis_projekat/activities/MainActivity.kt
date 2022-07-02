@@ -36,12 +36,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        auth = Firebase.auth
+
+        if(PermissionHelper.isLocationPermissionGranted(this)) {
+            startService()
+            init()
+        }
+        else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+    }
+    private fun init(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        auth = Firebase.auth
+
 
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -65,22 +77,18 @@ class MainActivity : AppCompatActivity() {
         tvName.setText(auth.currentUser!!.displayName)
         Glide.with(this).load(auth.currentUser!!.photoUrl).into(profilePic)
         tvLogout.setOnClickListener{Logout()}
-        if(PermissionHelper.isLocationPermissionGranted(this)) {
-            startService()
-        }
-        else{
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        }
     }
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()){
             isGranted: Boolean->
         if(isGranted){
             startService()
+            init()
             //trackLocation()
         }
         else{
             Toast.makeText(this,"Servis za lokaciju ne radi, dozvoli permisiju u opcijama",Toast.LENGTH_SHORT).show()
+            init()
         }
     }
 
@@ -91,17 +99,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun Logout(){
 
+        ServiceHelper.stopService(this)
         auth.signOut()
         val i: Intent = Intent(this, LoginActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        ServiceHelper.stopService(this)
         startActivity(i)
         finish()
     }
 
     private fun startService(){
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val service = sharedPreferences.getBoolean("share_location",false)
+        val service = sharedPreferences.getBoolean("share_location",true)
         if(service){
             ServiceHelper.startService(this)
         }else{

@@ -61,21 +61,26 @@ class MapsFragment : Fragment() {
         // dodaj locationmanager za pronalazak i updateovanje trenutne lokacije
         //kao i slanje te lokacije na firebase
         val zoomLevel = 17f
-        fusedLocationClient?.lastLocation?.addOnCompleteListener {
-            if(it.result.latitude!=null && it.result.longitude!=null) {
-                    map.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        LatLng(
-                            it.result.latitude,
-                            it.result.longitude
-                        ), zoomLevel
-                    )
-                )
-                lastLocation=it.result
-            }
-        }
+
         if(PermissionHelper.isLocationPermissionGranted(requireContext())) {
             enableMyLocation()
+            if(fusedLocationClient!=null){
+                fusedLocationClient?.lastLocation?.addOnCompleteListener {
+                    if(it.result!=null) {
+                        map.moveCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(
+                                    it.result.latitude,
+                                    it.result.longitude
+                                ), zoomLevel
+                            )
+                        )
+                        lastLocation=it.result
+                    }
+                }
+            }else{
+                setupLocationTrackingWithLocation()
+            }
         }
         else{
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -85,9 +90,31 @@ class MapsFragment : Fragment() {
 
 
 
+
     private fun setupLocationTracking(){
         if(PermissionHelper.isLocationPermissionGranted(requireContext())){
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        }else{
+            requestPermissionLauncherFLC.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+    @SuppressLint("MissingPermission")
+    private fun setupLocationTrackingWithLocation(){
+        if(PermissionHelper.isLocationPermissionGranted(requireContext())){
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+            fusedLocationClient?.lastLocation?.addOnCompleteListener {
+                if(it.result!=null) {
+                    map.moveCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(
+                                it.result.latitude,
+                                it.result.longitude
+                            ), 17f
+                        )
+                    )
+                    lastLocation=it.result
+                }
+            }
         }else{
             requestPermissionLauncherFLC.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }

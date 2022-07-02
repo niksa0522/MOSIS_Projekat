@@ -1,5 +1,6 @@
 package com.example.mosis_projekat.screens.registration
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mosis_projekat.shared_view_models.LoginRegistrationViewModel
 import com.example.mosis_projekat.R
 import com.example.mosis_projekat.databinding.FragmentRegisterBinding
+import com.example.mosis_projekat.helpers.PermissionHelper
 
 
 class RegisterFragment : Fragment() {
@@ -85,8 +87,20 @@ class RegisterFragment : Fragment() {
     }
 
     fun takePicture(){
-        val cameraIntent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        resultLauncher.launch(cameraIntent)
+        if(PermissionHelper.isCameraPermissionGranted(requireContext())) {
+            val cameraIntent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            resultLauncher.launch(cameraIntent)
+        }
+        else{
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()){
+            isGranted: Boolean->
+        if(isGranted){
+            takePicture()
+        }
     }
 
     override fun onDestroyView() {
