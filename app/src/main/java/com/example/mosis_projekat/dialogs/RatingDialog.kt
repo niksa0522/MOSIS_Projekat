@@ -1,5 +1,6 @@
 package com.example.mosis_projekat.dialogs
 
+import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -30,6 +31,16 @@ class RatingDialog: DialogFragment() {
     private var isNew:Boolean=false
     private var oldRating = 0f
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +48,8 @@ class RatingDialog: DialogFragment() {
     ): View? {
         _binding = FragmentDialogRatingBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
 
         comment = arguments?.getString("comment","")!!
         rating = arguments?.getFloat("rating",0f)!!
@@ -57,7 +70,7 @@ class RatingDialog: DialogFragment() {
         binding.btnCancel.setOnClickListener {
             dismiss()
         }
-        //TODO UI je scuffed promeni to
+        //malo lose izgleda ali tako je napravljen dialog, pokusao sam da sredim nije mi uspelo
 
     }
 

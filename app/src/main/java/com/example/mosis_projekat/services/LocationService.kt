@@ -55,6 +55,7 @@ class LocationService: Service() {
     var longitude = 0.0
 
     override fun onBind(p0: Intent?): IBinder? {
+        //ovo ne koristim ali sam morao da override
         TODO("Not yet implemented")
     }
 

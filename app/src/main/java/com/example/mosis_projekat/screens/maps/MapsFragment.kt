@@ -136,7 +136,6 @@ class MapsFragment : Fragment() {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
-    //TODO bolje napravi permisije
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()){
             isGranted: Boolean->

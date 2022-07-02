@@ -16,7 +16,6 @@ import com.example.mosis_projekat.services.LocationService
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private var preferenceLocation: SwitchPreferenceCompat? = null
-    private var preferenceNotification: SwitchPreferenceCompat? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -28,7 +27,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         savedInstanceState: Bundle?
     ): View {
         preferenceLocation = preferenceManager.findPreference("share_location")
-        preferenceNotification = preferenceManager.findPreference("notifications")
         if(preferenceLocation!=null){
             preferenceLocation!!.setOnPreferenceChangeListener { preference, newValue ->
                     val test = newValue as Boolean
@@ -41,18 +39,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 else{
                     ServiceHelper.stopService(requireContext())
                 }
-                //TODO pali i gasi servis
-                //TODO takodje u activity kada se logout gasi i kad se login pali
 
-                true
-            }
-        }
-        if(preferenceNotification!=null){
-            preferenceNotification!!.setOnPreferenceChangeListener { preference, newValue ->
-                val test = newValue as Boolean
-                Log.d("SHAREDPREF",test.toString())
-                //TODO pali i gasi servis
-                //TODO takodje u activity kada se logout gasi i kad se login pali
 
                 true
             }
