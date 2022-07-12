@@ -8,7 +8,7 @@ import com.example.mosis_projekat.screens.rankingsGlobal.RankingsGlobalFragment
 import com.example.mosis_projekat.screens.workshopInfo.WorkshopInfoFragment
 import com.example.mosis_projekat.screens.workshopReviews.WorkshopReviewsFragment
 
-class RankingsPagerAdapter(private val fa: FragmentActivity) : FragmentStateAdapter(fa) {
+class RankingsPagerAdapter(private val fa: Fragment) : FragmentStateAdapter(fa) {
 
     private val fragments = listOf<Fragment>(RankingsGlobalFragment(), RankingsFriendsFragment())
     public val fragmentNames = listOf<String>("Global","Prijatelji")

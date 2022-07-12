@@ -10,7 +10,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -47,7 +49,7 @@ class FriendsFragment : Fragment(),FriendAdapter.FriendClickListener {
     ): View {
         _binding = FragmentFriendsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.menu_friends)
         setHasOptionsMenu(true)
         ActivityCompat.requestPermissions(
             requireActivity(),
@@ -149,14 +151,15 @@ class FriendsFragment : Fragment(),FriendAdapter.FriendClickListener {
         val targetSDKVersion: Int = requireActivity().applicationInfo.targetSdkVersion
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && targetSDKVersion >= Build.VERSION_CODES.S) {
             return arrayOf(
+                Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_SCAN,
                 Manifest.permission.BLUETOOTH_CONNECT,
-                Manifest.permission.BLUETOOTH_ADVERTISE
+                Manifest.permission.BLUETOOTH_ADVERTISE,
             )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && targetSDKVersion >= Build.VERSION_CODES.Q) {
-            return arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+            return arrayOf(Manifest.permission.BLUETOOTH,Manifest.permission.ACCESS_FINE_LOCATION)
         } else {
-            return arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
+            return arrayOf( Manifest.permission.BLUETOOTH,Manifest.permission.ACCESS_COARSE_LOCATION)
         }
     }
 
@@ -201,7 +204,7 @@ class FriendsFragment : Fragment(),FriendAdapter.FriendClickListener {
             private val mmSocket = mmSocket
 
             override fun run() {
-                var numBytes: Int
+                var numBytes = 0
                 while(true){
                     numBytes = try {
                         mmInStream.read(mmBuffer)
@@ -221,11 +224,13 @@ class FriendsFragment : Fragment(),FriendAdapter.FriendClickListener {
                     Log.d("BluetoothTag", "Input stream was disconnected", e)
                 }
                 val myuid = FirebaseAuth.getInstance().currentUser!!.uid
-                val frienduid = String(mmBuffer)
-                val database = Firebase.database("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
-                val ref = database.reference.child("friends")
-                ref.child(myuid).child(frienduid).setValue(frienduid)
-                ref.child(frienduid).child(myuid).setValue(myuid)
+                if(numBytes!=0){
+                    val frienduid = String(mmBuffer).substring(0,numBytes)
+                    val database = Firebase.database("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
+                    val ref = database.reference.child("friends")
+                    ref.child(myuid).child(frienduid).setValue(frienduid)
+                    ref.child(frienduid).child(myuid).setValue(myuid)
+                }
                 mmSocket.close()
                 sharing=false
             }

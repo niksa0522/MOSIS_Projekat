@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MOSIS_Projekat</string>
+    <string name="app_name">Workshop Finder</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

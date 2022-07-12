@@ -1,14 +1,17 @@
 package com.example.mosis_projekat.adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.mosis_projekat.databinding.FragmentBluetoothUsersBinding
 import java.io.IOException
 import java.io.InputStream
@@ -17,11 +20,18 @@ import java.util.*
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 
+interface OnThreadClose{
+    fun OnThreadDone(activity: Activity)
+}
+
 class BTUserAdapter(
     private val values: List<BluetoothDevice>,
     private val adapter: BluetoothAdapter,
-    private val navController: NavController
-) : RecyclerView.Adapter<BTUserAdapter.ViewHolder>() {
+    private val navController: NavController,
+    private val activity: Activity
+) : RecyclerView.Adapter<BTUserAdapter.ViewHolder>(),OnThreadClose {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -40,7 +50,7 @@ class BTUserAdapter(
         val item = values[position]
         holder.idView.text = item.name
         holder.contentView.text = item.address
-        holder.itemView.setOnClickListener { ConnectToDevice(values.get(position)) }
+        holder.itemView.setOnClickListener { ConnectToDevice(values.get(position),activity) }
     }
 
     override fun getItemCount(): Int = values.size
@@ -55,12 +65,12 @@ class BTUserAdapter(
         }
     }
 
-    private fun ConnectToDevice(device:BluetoothDevice){
-        val conn: ConnectThread =ConnectThread(device)
+    private fun ConnectToDevice(device:BluetoothDevice,activity: Activity){
+        val conn: ConnectThread =ConnectThread(device,this,activity)
         conn.start()
     }
     @SuppressLint("MissingPermission")
-    private inner class ConnectThread(device: BluetoothDevice): Thread(){
+    private inner class ConnectThread(device: BluetoothDevice,private val callback: OnThreadClose,private val activity: Activity): Thread(){
         private val mmSocket: BluetoothSocket? by lazy(LazyThreadSafetyMode.NONE) {
             device.createRfcommSocketToServiceRecord(UUID.fromString("9ee91d5c-3803-43ff-9cec-2ccc1e236613"))
         }
@@ -77,7 +87,7 @@ class BTUserAdapter(
 
                 // The connection attempt succeeded. Perform work associated with
                 // the connection in a separate thread.
-                manageMyConnectedSocket(socket)
+                manageMyConnectedSocket(socket, callback,activity)
             }
         }
 
@@ -89,12 +99,12 @@ class BTUserAdapter(
                 Log.e("BluetoothTag", "Could not close the client socket", e)
             }
         }
-        fun manageMyConnectedSocket(socket: BluetoothSocket){
-            val conn: ConnectionThread = ConnectionThread(socket)
+        fun manageMyConnectedSocket(socket: BluetoothSocket,callback: OnThreadClose,activity: Activity){
+            val conn: ConnectionThread = ConnectionThread(socket, callback,activity)
             conn.start()
 
         }
-        private inner class ConnectionThread(mmSocket: BluetoothSocket) : Thread(){
+        private inner class ConnectionThread(mmSocket: BluetoothSocket,private val callback: OnThreadClose,private val activity: Activity) : Thread(){
             private val mmInStream: InputStream = mmSocket.inputStream
             private val mmOutStream: OutputStream = mmSocket.outputStream
             private val mmBuffer: ByteArray = ByteArray(1024)
@@ -120,7 +130,8 @@ class BTUserAdapter(
                         break
                 }
                 mmSocket?.close()
-                navController.popBackStack()
+                callback.OnThreadDone(activity)
+                //navController.popBackStack()
             }
             fun cancel() {
                 try{
@@ -130,6 +141,14 @@ class BTUserAdapter(
                 }
             }
         }
+    }
+
+    override fun OnThreadDone(activity: Activity) {
+        //navController.popBackStack()
+        activity.runOnUiThread {
+            Toast.makeText(activity,"Prijatelj dodat, vrati se na prethodni ekran",Toast.LENGTH_SHORT).show()
+        }
+        //Toast.makeText(context,"Prijatelj dodat, vrati se na prethodni ekran",Toast.LENGTH_SHORT).show()
     }
 
 }

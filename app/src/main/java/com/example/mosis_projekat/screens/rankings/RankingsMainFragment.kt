@@ -40,7 +40,7 @@ class RankingsMainFragment : Fragment() {
         }
 
         val viewPager = binding.viewPager
-        val pagerAdapter = RankingsPagerAdapter(requireActivity())
+        val pagerAdapter = RankingsPagerAdapter(this)
         viewPager.adapter=pagerAdapter
         viewPager.isUserInputEnabled=false
 

@@ -65,7 +65,7 @@ class BluetoothUsersFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
             }
-            adapter = BTUserAdapter(bluetoothDevices, bluetoothAdapter,findNavController())
+            adapter = BTUserAdapter(bluetoothDevices, bluetoothAdapter,findNavController(),requireActivity())
             view.adapter = adapter
         }
 

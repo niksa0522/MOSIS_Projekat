@@ -9,10 +9,7 @@ import com.example.mosis_projekat.models.UserWithID
 import com.example.mosis_projekat.models.UserWithRank
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 
 class FriendsViewModel : ViewModel() {
@@ -25,15 +22,29 @@ class FriendsViewModel : ViewModel() {
             FirebaseDatabase.getInstance("https://mosis-projekat-8393f-default-rtdb.europe-west1.firebasedatabase.app/")
         val auth: FirebaseAuth = Firebase.auth
         val uid = auth.currentUser?.uid ?: return
-        val friendsList = mutableListOf<String>()
-        mDatabase.reference.child("friends").child(uid).get().addOnSuccessListener {
+        var friendsList = mutableListOf<String>()
+        mDatabase.reference.child("friends").child(uid).addValueEventListener((object:
+            ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                friendsList = mutableListOf<String>()
+                val listChildren = snapshot.children
+                for(l in listChildren)
+                    l.key?.let { it1 -> friendsList.add(it1) }
+                getFriendsInList(friendsList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        }))
+        /*mDatabase.reference.child("friends").child(uid).get().addOnSuccessListener {
             val listChildren = it.children
             for(l in listChildren)
                 l.key?.let { it1 -> friendsList.add(it1) }
             getFriendsInList(friendsList)
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
-        }
+        }*/
     }
     private fun getFriendsInList(list:MutableList<String>){
         val mDatabase =

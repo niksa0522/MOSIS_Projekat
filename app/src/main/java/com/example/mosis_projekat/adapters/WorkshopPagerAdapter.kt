@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mosis_projekat.screens.workshopInfo.WorkshopInfoFragment
 import com.example.mosis_projekat.screens.workshopReviews.WorkshopReviewsFragment
 
-class WorkshopPagerAdapter(private val fa:FragmentActivity) : FragmentStateAdapter(fa) {
+class WorkshopPagerAdapter(private val fa:Fragment) : FragmentStateAdapter(fa) {
 
     private val fragments = listOf<Fragment>(WorkshopInfoFragment(),WorkshopReviewsFragment())
     public val fragmentNames = listOf<String>("Info","Ocene")
